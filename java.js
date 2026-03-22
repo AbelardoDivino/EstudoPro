@@ -1,120 +1,62 @@
-let dia1 = document.getElementById("dia1")
-let dia2 = document.getElementById("dia2")
-let dia3 = document.getElementById("dia3")
-let dia4 = document.getElementById("dia4")
-let dia5 = document.getElementById("dia5")
-let dia6 = document.getElementById("dia6")
-let dia7 = document.getElementById("dia7")
-let fazer_funcionar = document.getElementsByClassName("fazer_funcionar")
+let dias = document.getElementsByClassName("dia")
 
 let iniciar = document.getElementById("iniciar")
 let para = document.getElementById("para")
 let reniciar = document.getElementById("reniciar")
+let tempo = document.getElementById("tempo")
+let mostrarnatela = document.getElementsByClassName("fazer_funcionar")[0]
 
+let contar
+let segundos = 0
 
-// cada dia operarar via modo pomodoro
+alert("tempo nao pode ser maio que 25")
 
+// clicar no dia
+for (let i = 0; i < dias.length; i++) {
+    dias[i].addEventListener("click", () => {
 
-dia1.addEventListener("click",()=>{
+        let minutos = Number(tempo.value)
 
-    alert("adicione a quantidade de horas que ira estudar hoje ")
+        if (minutos === 0 || minutos > 20) {
+            alert("coloque um tempo válido (até 20 min)")
+            return
+        }
 
-    alert("tempo ate 20 min")
+        segundos = minutos * 60
+        console.log("tempo definido:", segundos)
 
-    let pomodoro
+    })
+}
 
-    let minutos = Number(prompt("adione os minutos"))
+// iniciar contador
+iniciar.addEventListener("click", () => {
 
-    let segundos = minutos * 60
-    console.log(segundos)
-
-    
-    if (minutos > 20) {
-        return alert("coloque ate 20 minutos nao exceda o valor")
+    if (segundos <= 0) {
+        alert("defina o tempo primeiro")
+        return
     }
-    let tempo = setInterval(()=>{
+
+    clearInterval(contar) // evita bug
+
+    contar = setInterval(() => {
         console.log(segundos)
+mostrarnatela.innerHTML = segundos
         segundos--
-    },1000)
-    
 
-  
-    
+        if (segundos <= 0) {
+            clearInterval(contar)
+            alert("tempo acabou!")
+        }
 
+    }, 1000)
 })
 
 
-
-dia2.addEventListener("click",()=>{
-
-    alert("adicione a quantidade de horas que ira estudar hoje ")
-
-    alert("tempo ate 20 min")
-
-    let pomodoro
-
-    let minutos = Number(prompt("adione os minutos"))
-
-    let segundos = minutos * 60
-    console.log(segundos)
-
-    
-    if (minutos > 20) {
-        return alert("coloque ate 20 minutos nao exceda o valor")
-    }
-    let tempo = setInterval(()=>{
-        console.log(segundos)
-        segundos--
-    },1000)
-    
-
+para.addEventListener("click",()=>{
+    clearInterval(contar)
 })
 
-dia3.addEventListener("click",()=>{
-  
-    alert("adicione a quantidade de horas que ira estudar hoje ")
-
-    alert("tempo ate 20 min")
-
-    let pomodoro
-
-    let minutos = Number(prompt("adione os minutos"))
-
-    let segundos = minutos * 60
-    console.log(segundos)
-
-    
-    if (minutos > 20) {
-        return alert("coloque ate 20 minutos nao exceda o valor")
-    }
-    let tempo = setInterval(()=>{
-        console.log(segundos)
-        segundos--
-    },1000)
-    
-
-})
-
-dia4.addEventListener("click",()=>{
-     alert("adicione a quantidade de horas que ira estudar hoje ")
-
-    alert("tempo ate 20 min")
-})
-
-dia5.addEventListener("click",()=>{
-     alert("adicione a quantidade de horas que ira estudar hoje ")
-
-    alert("tempo ate 20 min")
-})
-
-dia6.addEventListener("click",()=>{
-     alert("adicione a quantidade de horas que ira estudar hoje ")
-
-    alert("tempo ate 20 min")
-})
-
-dia7.addEventListener("click",()=>{
-     alert("adicione a quantidade de horas que ira estudar hoje ")
-
-    alert("tempo ate 20 min")
+reniciar.addEventListener("click",()=>{
+    clearInterval(contar)
+    segundos = 0
 })
